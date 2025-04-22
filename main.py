@@ -32,6 +32,7 @@ class ReferenceCode(db.Model):
     code = db.Column(db.String(100), unique=True, nullable=False)
     used = db.Column(db.Boolean, default=False)
 
+@app.before_first_request
 def create_tables():
     with app.app_context():
         db.create_all()
