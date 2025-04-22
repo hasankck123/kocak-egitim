@@ -136,7 +136,7 @@ def admin():
                 db.session.add(code)
                 db.session.commit()
         elif 'announcement_text' in request.form:
-            ann = Announcement(text=request.form['announcement_text'])
+            text = request.form['announcement_text']
             print("📢 Yeni duyuru eklendi:", text)
             db.session.add(ann)
             db.session.commit()
