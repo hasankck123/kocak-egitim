@@ -143,8 +143,16 @@ def admin():
                 db.session.delete(user)
                 db.session.commit()
 
+    # ⚠️ POST BLOĞUNUN DIŞINDAKİ BÖLÜM — her zaman çalışır
     live_classes = LiveClass.query.order_by(LiveClass.created_at.desc()).all()
     video_records = VideoRecord.query.order_by(VideoRecord.created_at.desc()).all()
     reference_codes = ReferenceCode.query.all()
     users = User.query.filter(User.username != 'admin').all()
-    return render_template('admin.html', live_classes=live_classes, video_records=video_records, reference_codes=reference_codes, users=users)
+
+    return render_template(
+        'admin.html',
+        live_classes=live_classes,
+        video_records=video_records,
+        reference_codes=reference_codes,
+        users=users
+    )
