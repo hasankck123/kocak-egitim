@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Canlı Dersler{% endblock %}
+{% block content %}
+<div class="container">
+    <h2>Canlı Dersler</h2>
+    {% for cls in classes %}
+    <div class="card">
+        <h3>{{ cls.title }}</h3>
+        <a href="{{ cls.url }}" target="_blank">Derse Git</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

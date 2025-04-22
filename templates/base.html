@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}KOCAK Education{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div class="navbar-top-banner">------- KAYIT OLMADAN ÖNCE WHATSAPP ÜZERİNDEN İLETİŞİME GEÇMENİZ GEREKMEKTEDİR. -------</div>
+    <div class="navbar">
+        <img src="/static/images/logo.png" alt="Logo">
+        <div class="nav-links">
+            <a href="/">Anasayfa</a>
+            <a href="/live-classes">Canlı Dersler</a>
+            <a href="/recordings">Ders Kayıtları</a>
+            {% if session.get('user') == 'admin' %}
+            <a href="/admin">Admin</a>
+            {% endif %}
+            {% if session.get('user') %}
+            <a href="/logout">Çıkış Yap</a>
+            {% else %}
+            <a href="/login">Giriş</a>
+            <a href="/register">Kayıt</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="main">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

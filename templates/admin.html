@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Admin Paneli{% endblock %}
+{% block content %}
+<div class="container">
+    <h2>Canlı Ders Ekle</h2>
+    <form method="POST">
+        <input type="text" name="live_title" placeholder="Ders Başlığı" required>
+        <input type="text" name="live_url" placeholder="Canlı Link" required>
+        <button type="submit">Ekle</button>
+    </form>
+
+    <h3>Ekli Canlı Dersler</h3>
+    <select>
+        {% for cls in live_classes %}
+        <option>{{ cls.title }}</option>
+        {% endfor %}
+    </select>
+    {% for cls in live_classes %}
+    <div class="card">
+        <strong>{{ cls.title }}</strong><br>
+        <a href="{{ cls.url }}" target="_blank">Bağlantı</a>
+        <form method="POST">
+            <input type="hidden" name="delete_live" value="{{ cls.id }}">
+            <button type="submit" class="small-button">Sil</button>
+        </form>
+    </div>
+    {% endfor %}
+
+    <h2>Ders Kaydı Ekle</h2>
+    <form method="POST">
+        <input type="text" name="record_title" placeholder="Ders Adı" required>
+        <input type="text" name="embed_code" placeholder="Yalnızca YouTube linki veya embed kodu" required>
+        <button type="submit">Ekle</button>
+    </form>
+
+    <h3>Ekli Video Kayıtları</h3>
+    <select>
+        {% for rec in video_records %}
+        <option>{{ rec.title }}</option>
+        {% endfor %}
+    </select>
+    {% for rec in video_records %}
+    <div class="card">
+        <strong>{{ rec.title }}</strong>
+        <form method="POST">
+            <input type="hidden" name="delete_record" value="{{ rec.id }}">
+            <button type="submit" class="small-button">Sil</button>
+        </form>
+    </div>
+    {% endfor %}
+
+    <h2>Referans Kodu Oluştur</h2>
+    <form method="POST">
+        <input type="text" name="ref_code" placeholder="Referans Kodu" required>
+        <button type="submit">Oluştur</button>
+    </form>
+
+    <h3>Ekli Referans Kodları</h3>
+    <select>
+        {% for ref in reference_codes %}
+        <option>{{ ref.code }}</option>
+        {% endfor %}
+    </select>
+</div>
+{% endblock %}
