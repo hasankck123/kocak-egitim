@@ -137,11 +137,14 @@ def admin():
             if rec:
                 db.session.delete(rec)
                 db.session.commit()
+        elif 'delete_user' in request.form:
+            user = User.query.get(request.form['delete_user'])
+            if user and user.username != 'admin':
+                db.session.delete(user)
+                db.session.commit()
 
     live_classes = LiveClass.query.order_by(LiveClass.created_at.desc()).all()
     video_records = VideoRecord.query.order_by(VideoRecord.created_at.desc()).all()
     reference_codes = ReferenceCode.query.all()
-    return render_template('admin.html', live_classes=live_classes, video_records=video_records, reference_codes=reference_codes)
-
-if __name__ == '__main__':
-    app.run(debug=True)
+    users = User.query.filter(User.username != 'admin').all()
+    return render_template('admin.html', live_classes=live_classes, video_records=video_records, reference_codes=reference_codes, users=users)

@@ -63,3 +63,16 @@
     </select>
 </div>
 {% endblock %}
+
+<h3>Kayıtlı Üyeler</h3>
+<ul>
+  {% for user in users %}
+    <li>
+      {{ user.username }}
+      <form method="POST" style="display:inline;">
+        <input type="hidden" name="delete_user" value="{{ user.id }}">
+        <button type="submit">Sil</button>
+      </form>
+    </li>
+  {% endfor %}
+</ul>
