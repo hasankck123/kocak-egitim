@@ -102,5 +102,24 @@
         `;
     }
     </script>
+    <h2>Duyuru Ekle</h2>
+    <form method="POST">
+        <textarea name="announcement_text" placeholder="Yeni duyuru metni" required style="width:100%; height:80px; padding:10px; margin-bottom:10px;"></textarea>
+        <button type="submit" class="small-button">Ekle</button>
+    </form>
+
+    <h3>Mevcut Duyurular</h3>
+    {% for duyuru in announcements %}
+    <div class="card" style="margin-bottom:10px; padding:10px; background:#f8f8f8;">
+        {{ duyuru.text }}
+        <form method="POST" style="display:inline;">
+            <input type="hidden" name="delete_announcement" value="{{ duyuru.id }}">
+            <button type="submit" class="small-button">Sil</button>
+        </form>
+    </div>
+    {% endfor %}
+
+
+
 </div>
 {% endblock %}
