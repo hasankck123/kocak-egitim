@@ -138,8 +138,9 @@ def admin():
         elif 'announcement_text' in request.form:
             text = request.form['announcement_text']
             print("📢 Yeni duyuru eklendi:", text)
-            db.session.add(ann)
-            db.session.commit()
+            ann = Announcement(text=text)
+                db.session.add(ann)
+                db.session.commit()
         elif 'delete_announcement' in request.form:
             ann = Announcement.query.get(request.form['delete_announcement'])
             if ann:
