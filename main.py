@@ -1,11 +1,14 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app = Flask(__name__)  # ✅ 'pp' değil, 'app' kullan
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Yesilsogan*123@db.dmodecqxmgutyubyochn.supabase.co:5432/postgres?sslmode=require'
 app.secret_key = "supersecret"
 db = SQLAlchemy(app)
+
 
 # MODELLER
 class User(db.Model):
@@ -47,6 +50,18 @@ def convert_youtube_link_to_iframe(url):
         video_id = url.split('watch?v=')[-1]
         return f'<iframe width="100%" height="300" src="https://www.youtube.com/embed/{video_id}" frameborder="0" allowfullscreen></iframe>'
     return url
+
+@app.route('/test')
+def test():
+    try:
+        codes = ReferenceCode.query.all()
+        return f"{len(codes)} referans kodu bulundu."
+    except Exception as e:
+        return f"HATA: {e}"
+
+
+
+
 
 @app.route('/')
 def index():
