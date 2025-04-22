@@ -11,9 +11,22 @@
             <img src="/static/images/afis.png" alt="Afiş">
         </div>
 
+        {% if announcements %}
+        <div class="announcements" style="margin-top: 20px; background-color: #f5f7fa; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <h3 style="color: #2c3e50; font-size: 20px; margin-bottom: 15px;">📢 Duyurular</h3>
+            <ul style="list-style-type: none; padding: 0;">
+                {% for ann in announcements %}
+                    <li style="margin-bottom: 10px; padding: 10px; background-color: #ffffff; border-left: 4px solid #3498db; font-size: 16px; border-radius: 5px;">
+                        {{ ann.text }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
     </div>
+
     <div class="ads">
         <img src="/static/images/sag_reklam_afis.png" alt="Sağ Reklam Afişi" class="ads-image">
-      </div>
+    </div>
 </div>
 {% endblock %}
