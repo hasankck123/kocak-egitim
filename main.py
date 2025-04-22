@@ -30,6 +30,11 @@ class ReferenceCode(db.Model):
     code = db.Column(db.String(100), unique=True, nullable=False)
     used = db.Column(db.Boolean, default=False)
 
+class Announcement(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
 with app.app_context():
     db.create_all()
     if not User.query.filter_by(username='admin').first():
@@ -45,7 +50,10 @@ def convert_youtube_link_to_iframe(url):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    if 'user' not in session:
+        return redirect(url_for('login'))
+    announcements = Announcement.query.order_by(Announcement.created_at.desc()).all()
+    return render_template('index.html', announcements=announcements)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -127,6 +135,16 @@ def admin():
                 code = ReferenceCode(code=request.form['ref_code'])
                 db.session.add(code)
                 db.session.commit()
+        elif 'announcement_text' in request.form:
+            ann = Announcement(text=request.form['announcement_text'])
+            print("📢 Yeni duyuru eklendi:", text)
+            db.session.add(ann)
+            db.session.commit()
+        elif 'delete_announcement' in request.form:
+            ann = Announcement.query.get(request.form['delete_announcement'])
+            if ann:
+                db.session.delete(ann)
+                db.session.commit()
         elif 'delete_live' in request.form:
             cls = LiveClass.query.get(request.form['delete_live'])
             if cls:
@@ -143,16 +161,18 @@ def admin():
                 db.session.delete(user)
                 db.session.commit()
 
-    # ⚠️ POST BLOĞUNUN DIŞINDAKİ BÖLÜM — her zaman çalışır
     live_classes = LiveClass.query.order_by(LiveClass.created_at.desc()).all()
     video_records = VideoRecord.query.order_by(VideoRecord.created_at.desc()).all()
     reference_codes = ReferenceCode.query.all()
     users = User.query.filter(User.username != 'admin').all()
+    announcements = Announcement.query.order_by(Announcement.created_at.desc()).all()
+    print("📝 Tüm duyurular:", announcements)
 
     return render_template(
         'admin.html',
         live_classes=live_classes,
         video_records=video_records,
         reference_codes=reference_codes,
-        users=users
+        users=users,
+        announcements=announcements
     )
