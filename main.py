@@ -1,14 +1,17 @@
-
-from flask import Flask, render_template, request, redirect, session, url_for, flash
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
-import os
 
 app = Flask(__name__)
-app.secret_key = 'egitim_secret_key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.secret_key = "supersecret"
 db = SQLAlchemy(app)
 
+with app.app_context():
+    db.create_all()
+    if not User.query.filter_by(username='admin').first():
+        admin = User(username='admin', password='yesilsogan')
+        db.session.add(admin)
+        db.session.commit()
 # MODELLER
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
