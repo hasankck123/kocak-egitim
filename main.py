@@ -76,15 +76,19 @@ def index():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        user = User.query.filter_by(username=username, password=password).first()
-        if user:
-            session['user'] = username
-            return redirect('/')
-        else:
-            flash('Kullanıcı adı veya şifre hatalı')
+        try:
+            username = request.form['username']
+            password = request.form['password']
+            user = User.query.filter_by(username=username, password=password).first()
+            if user:
+                session['user'] = username
+                return redirect('/')
+            else:
+                flash('Kullanıcı adı veya şifre hatalı')
+        except Exception as e:
+            return f"❌ Giriş Hatası: {e}"
     return render_template('login.html')
+
 
 @app.route('/logout')
 def logout():
