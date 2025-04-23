@@ -59,6 +59,10 @@ def test():
         return f"{len(codes)} referans kodu bulundu."
     except Exception as e:
         return f"HATA: {e}"
+@app.route('/show-codes')
+def show_codes():
+    codes = ReferenceCode.query.all()
+    return "<br>".join([f"{c.id} - {c.code} - Kullanıldı: {c.used}" for c in codes])
 
 
 
