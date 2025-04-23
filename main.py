@@ -84,6 +84,7 @@ def register():
         password = request.form['password']
         refcode = request.form['refcode']
         code = ReferenceCode.query.filter_by(code=refcode, used=False).first()
+
         if code:
             existing = User.query.filter_by(username=username).first()
             if existing:
@@ -94,10 +95,13 @@ def register():
                 code.used = True
                 db.session.commit()
                 flash('Kayıt başarılı!')
-                return redirect('/login')
+                return redirect('/login')  # ✅ sadece başarılıysa yönlendir
         else:
             flash('Geçersiz veya kullanılmış referans kodu')
+
+    # Bu sayfa her durumda register.html'i tekrar göstermeli
     return render_template('register.html')
+
 
 @app.route('/live-classes')
 def live_classes():
