@@ -52,26 +52,6 @@ def convert_youtube_link_to_iframe(url):
         return f'<iframe width="100%" height="300" src="https://www.youtube.com/embed/{video_id}" frameborder="0" allowfullscreen></iframe>'
     return url
 
-@app.route('/test')
-def test():
-    try:
-        codes = ReferenceCode.query.all()
-        return f"{len(codes)} referans kodu bulundu."
-    except Exception as e:
-        return f"HATA: {e}"
-@app.route('/show-codes')
-def show_codes():
-    codes = ReferenceCode.query.all()
-    return "<br>".join([f"{c.id} - {c.code} - Kullanıldı: {c.used}" for c in codes])
-
-
-
-
-
-
-
-
-
 @app.route('/')
 def index():
     announcements = Announcement.query.order_by(Announcement.created_at.desc()).all()
