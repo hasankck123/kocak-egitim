@@ -5,8 +5,8 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)  # ✅ 'pp' değil, 'app' kullan
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Yesilsogan*123@db.dmodecqxmgutyubyochn.supabase.co:5432/postgres?sslmode=require'
-app.secret_key = "supersecret"
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://kocakadmin:4Zj7NIKIMpmdh1EOaxXNNeMqV6sFmiFI@dpg-d048kpi4d50c739u7ngg-a/kocakegitim'
+
 db = SQLAlchemy(app)
 
 
