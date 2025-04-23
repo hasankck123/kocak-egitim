@@ -76,6 +76,7 @@ def create_admin():
 
 
 
+
 @app.route('/')
 def index():
     announcements = Announcement.query.order_by(Announcement.created_at.desc()).all()
