@@ -65,7 +65,6 @@ def test():
 @app.route('/create-admin')
 def create_admin():
     try:
-        from models import User  # gerekiyorsa
         if not User.query.filter_by(username='admin').first():
             admin = User(username='admin', password='yesilsogan')
             db.session.add(admin)
@@ -74,6 +73,7 @@ def create_admin():
         return "⚠️ Zaten kayıtlı."
     except Exception as e:
         return f"❌ Hata: {e}"
+
 
 
 @app.route('/')
