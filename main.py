@@ -62,6 +62,19 @@ def test():
 
 
 
+@app.route('/create-admin')
+def create_admin():
+    try:
+        from models import User  # gerekiyorsa
+        if not User.query.filter_by(username='admin').first():
+            admin = User(username='admin', password='yesilsogan')
+            db.session.add(admin)
+            db.session.commit()
+            return "✅ Admin kullanıcı başarıyla eklendi."
+        return "⚠️ Zaten kayıtlı."
+    except Exception as e:
+        return f"❌ Hata: {e}"
+
 
 @app.route('/')
 def index():
