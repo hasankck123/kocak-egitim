@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Dosyalar{% endblock %}
+{% block content %}
+<h2 style="text-align:center; margin-bottom: 30px;">📂 Dosyalar</h2>
+<form method="get" style="text-align: center; margin-bottom: 20px;">
+  <input type="text" name="q" placeholder="Dosya ara..." value="{{ request.args.get('q', '') }}" style="padding: 10px; width: 300px; border-radius: 8px; border: 1px solid #ccc;">
+  <button type="submit" style="padding: 10px 20px; border-radius: 8px; background: #007bff; color: white; border: none;">Ara</button>
+</form>
+<div class="folders-container" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+  {% if folders %}
+    {% for folder, files in folders.items() %}
+      {% set filtered_files = [] %}
+      {% for file in files %}
+        {% if not request.args.get('q') or request.args.get('q').lower() in file.lower() %}
+          {% do filtered_files.append(file) %}
+        {% endif %}
+      {% endfor %}
+      <div class="folder-card" style="flex: 1 1 300px; background: #ffffff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 20px;">
+        <h3 style="margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 10px;">📁 {{ folder }}</h3>
+        {% if filtered_files %}
+          <ul style="list-style: none; padding-left: 0;">
+          {% for file in filtered_files %}
+            <li style="margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
+              <a href="/uploads/{{ folder }}/{{ file }}" download style="text-decoration: none; color: #007bff;">
+                📄 {{ file }}
+              </a>
+              {% if session.get('user') == 'admin' %}
+              <form method="POST" action="/admin/delete_file" onsubmit="return confirm('Bu dosyayı silmek istediğinizden emin misiniz?');" style="display:inline; margin-left: 10px;">
+                <input type="hidden" name="folder" value="{{ folder }}">
+                <input type="hidden" name="filename" value="{{ file }}">
+                <button type="submit" style="background: red; color: white; border: none; padding: 5px 10px; border-radius: 5px; font-size: 12px;">Sil</button>
+              </form>
+              {% endif %}
+            </li>
+          {% endfor %}
+          </ul>
+        {% else %}
+          <p style="color: #888;">Uygun dosya bulunamadı.</p>
+        {% endif %}
+      </div>
+    {% endfor %}
+  {% else %}
+    <p style="text-align:center; color:#777">Henüz dosya yüklenmemiş.</p>
+  {% endif %}
+</div>
+{% endblock %}

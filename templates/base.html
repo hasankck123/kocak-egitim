@@ -14,14 +14,14 @@
             <a href="/">Anasayfa</a>
             <a href="/live-classes">Canlı Dersler</a>
             <a href="/recordings">Ders Kayıtları</a>
-            {% if session.get('user') == 'admin' %}
-            <a href="/admin">Admin</a>
-            {% endif %}
             {% if session.get('user') %}
-            <a href="/logout">Çıkış Yap</a>
+                {% if session.get('user') == 'admin' %}
+                <a href="/admin">Admin</a>
+                {% endif %}
+                <a href="/logout">Çıkış Yap</a>
             {% else %}
-            <a href="/login">Giriş</a>
-            <a href="/register">Kayıt</a>
+                <a href="/login">Giriş</a>
+                <a href="/register">Kayıt</a>
             {% endif %}
         </div>
     </div>
@@ -30,8 +30,6 @@
     </div>
     <a href="https://wa.me/905455759285" target="_blank" class="whatsapp-button">
         <img src="/static/images/whatsapp-icon.jpg" alt="WhatsApp" />
-      </a>
-      
-
+    </a>
 </body>
 </html>

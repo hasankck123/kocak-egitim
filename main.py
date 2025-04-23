@@ -1,15 +1,13 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+import os
 
-app = Flask(__name__)  # ✅ 'pp' değil, 'app' kullan
-app.secret_key = "kocakegitim2025"  # ya da dilediğin güçlü bir ifade
+app = Flask(__name__)
+app.secret_key = "kocakegitim2025"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://kocakadmin:4Zj7NIKIMpmdh1EOaxXNNeMqV6sFmiFI@dpg-d048kpi4d50c739u7ngg-a/kocakegitim'
 
 db = SQLAlchemy(app)
-
 
 # MODELLER
 class User(db.Model):
@@ -57,16 +55,13 @@ def index():
     announcements = Announcement.query.order_by(Announcement.created_at.desc()).all()
     return render_template('index.html', announcements=announcements)
 
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         try:
             username = request.form['username']
             password = request.form['password']
-            print("🧪 Giriş deneniyor:", username, password)  # log
             user = User.query.filter_by(username=username, password=password).first()
-            print("✅ Kullanıcı:", user)  # log
             if user:
                 session['user'] = username
                 return redirect('/')
@@ -76,8 +71,6 @@ def login():
             import traceback
             return f"<pre>❌ Hata:\n{traceback.format_exc()}</pre>"
     return render_template('login.html')
-
-
 
 @app.route('/logout')
 def logout():
@@ -147,9 +140,7 @@ def admin():
                 db.session.add(code)
                 db.session.commit()
         elif 'announcement_text' in request.form:
-            text = request.form['announcement_text']
-            print("📢 Yeni duyuru eklendi:", text)
-            ann = Announcement(text=text)
+            ann = Announcement(text=request.form['announcement_text'])
             db.session.add(ann)
             db.session.commit()
         elif 'delete_announcement' in request.form:
@@ -178,7 +169,6 @@ def admin():
     reference_codes = ReferenceCode.query.all()
     users = User.query.filter(User.username != 'admin').all()
     announcements = Announcement.query.order_by(Announcement.created_at.desc()).all()
-    print("📝 Tüm duyurular:", announcements)
 
     return render_template(
         'admin.html',
