@@ -65,10 +65,9 @@ def test():
 
 @app.route('/')
 def index():
-    if 'user' not in session:
-        return redirect(url_for('login'))
     announcements = Announcement.query.order_by(Announcement.created_at.desc()).all()
     return render_template('index.html', announcements=announcements)
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
