@@ -79,15 +79,19 @@ def login():
         try:
             username = request.form['username']
             password = request.form['password']
+            print("🧪 Giriş deneniyor:", username, password)  # log
             user = User.query.filter_by(username=username, password=password).first()
+            print("✅ Kullanıcı:", user)  # log
             if user:
                 session['user'] = username
                 return redirect('/')
             else:
-                flash('Kullanıcı adı veya şifre hatalı')
+                return "❌ Hatalı kullanıcı adı veya şifre"
         except Exception as e:
-            return f"❌ Giriş Hatası: {e}"
+            import traceback
+            return f"<pre>❌ Hata:\n{traceback.format_exc()}</pre>"
     return render_template('login.html')
+
 
 
 @app.route('/logout')
