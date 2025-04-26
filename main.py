@@ -36,6 +36,10 @@ class Announcement(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+class Settings(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    live_class_url = db.Column(db.String(500), nullable=True)
+
 
 with app.app_context():
     db.create_all()
@@ -107,9 +111,8 @@ def register():
 def live_classes():
     if 'user' not in session:
         return redirect(url_for('login'))
-    latest_class = LiveClass.query.order_by(LiveClass.created_at.desc()).first()  # Sadece en son eklenen canlı ders
-    return render_template('live_classes.html', latest_class=latest_class)
-
+    setting = Settings.query.first()
+    return render_template('live_classes.html', live_class_url=setting.live_class_url if setting else None)
 
 @app.route('/recordings')
 def recordings():
@@ -168,12 +171,22 @@ def admin():
             if user and user.username != 'admin':
                 db.session.delete(user)
                 db.session.commit()
+        elif 'update_live_class_url' in request.form:
+            new_url = request.form['update_live_class_url']
+            setting = Settings.query.first()
+            if not setting:
+                setting = Settings(live_class_url=new_url)
+                db.session.add(setting)
+            else:
+                setting.live_class_url = new_url
+            db.session.commit()
 
     live_classes = LiveClass.query.order_by(LiveClass.created_at.desc()).all()
     video_records = VideoRecord.query.order_by(VideoRecord.created_at.desc()).all()
     reference_codes = ReferenceCode.query.all()
     users = User.query.filter(User.username != 'admin').all()
     announcements = Announcement.query.order_by(Announcement.created_at.desc()).all()
+    setting = Settings.query.first()
 
     return render_template(
         'admin.html',
@@ -181,5 +194,7 @@ def admin():
         video_records=video_records,
         reference_codes=reference_codes,
         users=users,
-        announcements=announcements
+        announcements=announcements,
+        setting=setting
     )
+

@@ -2,6 +2,15 @@
 {% block title %}Admin Paneli{% endblock %}
 {% block content %}
 <div class="container">
+    <h2>Canlı Ders Linki Güncelle</h2>
+    <form method="POST">
+        <input type="text" name="update_live_class_url" placeholder="Yeni canlı ders linki" style="width:100%; margin-bottom:10px;">
+        <button type="submit">Güncelle</button>
+    </form>
+    
+
+
+
     <h2>Canlı Ders Ekle</h2>
     <form method="POST">
         <input type="text" name="live_title" placeholder="Ders Başlığı" required>

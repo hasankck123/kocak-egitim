@@ -4,28 +4,22 @@
 <div class="container">
     <h2 style="text-align: center; margin-bottom: 30px;">Canlı Ders</h2>
 
-    {% if latest_class %}
-    <div class="live-class-card">
-        <h3>{{ latest_class.title }}</h3>
+    <div style="text-align: center; margin-bottom: 20px;">
+        <button onclick="document.getElementById('iframe-container').style.display='block'; this.style.display='none';" 
+            style="padding: 10px 20px; font-size: 18px; border: none; background-color: #4CAF50; color: white; border-radius: 10px; cursor: pointer;">
+            📚 Derse Başla
+        </button>
+    </div>
 
-        <div style="text-align: center; margin-bottom: 20px;">
-            <button onclick="document.getElementById('iframe-container').style.display='block'; this.style.display='none';" style="padding: 10px 20px; font-size: 18px; border: none; background-color: #4CAF50; color: white; border-radius: 10px; cursor: pointer;">
-                📚 Derse Başla
-            </button>
-        </div>
-
-        <div id="iframe-container" style="display: none;">
-            <div class="iframe-container">
-                <iframe 
-                    src="{{ latest_class.url }}" 
-                    allow="camera; microphone; fullscreen; display-capture">
-                </iframe>
-            </div>
+    <div id="iframe-container" style="display: none;">
+        <div class="iframe-container">
+            <iframe 
+                src="https://kocakegitim.daily.co/kocakegitim"
+                allow="camera; microphone; fullscreen; speaker; display-capture"
+                style="width: 100%; height: 600px; border: none; border-radius: 10px;">
+            </iframe>
         </div>
     </div>
-    {% else %}
-    <p style="text-align:center;">Şu anda aktif canlı ders bulunmamaktadır.</p>
-    {% endif %}
 
 </div>
 
@@ -36,26 +30,10 @@
     padding: 20px;
 }
 
-.live-class-card {
-    background: #ffffff;
-    border: 1px solid #ddd;
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    margin-bottom: 30px;
-}
-
-.live-class-card h3 {
-    text-align: center;
-    margin-bottom: 20px;
-    border-bottom: 2px solid #eee;
-    padding-bottom: 10px;
-}
-
 .iframe-container {
     position: relative;
     width: 100%;
-    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
     height: 0;
     overflow: hidden;
     border-radius: 10px;
