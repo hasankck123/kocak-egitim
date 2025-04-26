@@ -2,12 +2,26 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}KOCAK Education{% endblock %}</title>
-    <link rel="stylesheet" href="/static/css/style.css">
+    <title>{% block title %}KOCAK Education - LGS'ye Hazırlıkta En İyi Sistem{% endblock %}</title>
+    <meta name="description" content="Kayıt olmadan önce WhatsApp üzerinden iletişime geçin. Haftada 3 saat canlı ders, ücretsiz kitap gönderimi ve rehberlik desteği!">
+
+    <!-- Open Graph Etiketleri (Sosyal Medya ve Google için) -->
+    <meta property="og:title" content="KOCAK Education - LGS'ye Hazırlıkta En İyi Sistem" />
+    <meta property="og:description" content="Kayıt olmadan önce WhatsApp üzerinden iletişime geçin. Haftada 3 saat canlı ders, ücretsiz kitap gönderimi ve rehberlik desteği!" />
+    <meta property="og:image" content="https://www.kocakegitim.com/static/images/logo.png" />
+    <meta property="og:url" content="https://www.kocakegitim.com/" />
+    <meta property="og:type" content="website" />
+
+    <!-- Responsive tasarım için -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-    <div class="navbar-top-banner">------- KAYIT OLMADAN ÖNCE WHATSAPP ÜZERİNDEN İLETİŞİME GEÇMENİZ GEREKMEKTEDİR. -------</div>
+    <div class="navbar-top-banner">
+        ------- KAYIT OLMADAN ÖNCE WHATSAPP ÜZERİNDEN İLETİŞİME GEÇMENİZ GEREKMEKTEDİR. -------
+    </div>
     <div class="navbar">
         <img src="/static/images/logo.png" alt="Logo">
         <div class="nav-links">
@@ -16,7 +30,7 @@
             <a href="/recordings">Ders Kayıtları</a>
             {% if session.get('user') %}
                 {% if session.get('user') == 'admin' %}
-                <a href="/admin">Admin</a>
+                    <a href="/admin">Admin</a>
                 {% endif %}
                 <a href="/logout">Çıkış Yap</a>
             {% else %}
