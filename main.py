@@ -107,8 +107,9 @@ def register():
 def live_classes():
     if 'user' not in session:
         return redirect(url_for('login'))
-    classes = LiveClass.query.order_by(LiveClass.created_at.desc()).all()
-    return render_template('live_classes.html', classes=classes)
+    latest_class = LiveClass.query.order_by(LiveClass.created_at.desc()).first()  # Sadece en son eklenen canlı ders
+    return render_template('live_classes.html', latest_class=latest_class)
+
 
 @app.route('/recordings')
 def recordings():
