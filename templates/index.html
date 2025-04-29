@@ -3,36 +3,13 @@
 {% block content %}
 <div class="main-content">
     <div class="ads">
-        <img src="/static/images/afis1.png" alt="Afiş 1" class="ads-image">
-
+        <img src="/static/images/afis1.png" alt="Ana Afiş" class="ads-image">
     </div>
 
     <div class="content">
         <div class="banner">
-            <div class="slider-container">
-              <div class="slider-slide active">
-                <img src="/static/images/afis1.png" alt="Afiş 1">
-              </div>
-              <div class="slider-slide">
-                <img src="/static/images/afis2.png" alt="Afiş 2">
-              </div>
-              <div class="slider-slide">
-                <img src="/static/images/afis3.png" alt="Afiş 3">
-              </div>
-          
-              <!-- Yön okları -->
-              <button class="slider-btn prev" onclick="prevSlide()">&#10094;</button>
-              <button class="slider-btn next" onclick="nextSlide()">&#10095;</button>
-          
-              <!-- Noktalar -->
-              <div class="slider-dots">
-                <span class="dot active" onclick="goToSlide(0)"></span>
-                <span class="dot" onclick="goToSlide(1)"></span>
-                <span class="dot" onclick="goToSlide(2)"></span>
-              </div>
-            </div>
-          </div>
-          
+            <img src="/static/images/afis1.png" alt="Ana Afiş" style="max-width: 100%; height: auto; display: block; margin: 0 auto;">
+        </div>
 
         {% if announcements %}
         <div class="announcements" style="margin-top: 20px; background-color: #f5f7fa; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
@@ -49,46 +26,7 @@
     </div>
 
     <div class="ads">
-        <img src="/static/images/sag_reklam_afis.png" alt="Sağ Reklam Afişi" class="ads-image">
+        <!-- Eğer sağ reklam afişin yoksa burayı boş bırak veya sil -->
     </div>
 </div>
-
-<script>
-    let slideIndex = 0;
-    const slides = document.querySelectorAll('.slider-slide');
-    const dots = document.querySelectorAll('.dot');
-    let autoSlide = setInterval(nextSlide, 10000);
-  
-    function showSlide(index) {
-      slides.forEach((slide, i) => {
-        slide.classList.remove('active');
-        dots[i].classList.remove('active');
-      });
-      slides[index].classList.add('active');
-      dots[index].classList.add('active');
-      slideIndex = index;
-    }
-  
-    function nextSlide() {
-      slideIndex = (slideIndex + 1) % slides.length;
-      showSlide(slideIndex);
-    }
-  
-    function prevSlide() {
-      slideIndex = (slideIndex - 1 + slides.length) % slides.length;
-      showSlide(slideIndex);
-    }
-  
-    function goToSlide(index) {
-      showSlide(index);
-      resetAutoSlide();
-    }
-  
-    function resetAutoSlide() {
-      clearInterval(autoSlide);
-      autoSlide = setInterval(nextSlide, 10000);
-    }
-  </script>
-  
-
 {% endblock %}
