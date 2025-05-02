@@ -12,7 +12,7 @@ body {
     display: flex;
     align-items: center; /* YAZILARI DİKEY ORTALAR */
     justify-content: space-between;
-    background-color: #b39244;
+    background-color: #3f3b33;
     padding: 20px 40px;
     flex-wrap: wrap;
 }
