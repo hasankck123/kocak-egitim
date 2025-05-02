@@ -168,6 +168,13 @@ def admin():
                 db.session.delete(user)
                 db.session.commit()
 
+        elif 'delete_all_refs' in request.form:
+                ReferenceCode.query.delete()
+                db.session.commit()
+                flash('Tüm referans kodları silindi.', 'success')
+
+
+
     live_classes = LiveClass.query.order_by(LiveClass.created_at.desc()).all()
     video_records = VideoRecord.query.order_by(VideoRecord.created_at.desc()).all()
     reference_codes = ReferenceCode.query.all()
